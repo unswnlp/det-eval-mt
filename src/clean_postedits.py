@@ -4,9 +4,9 @@ Translation Data Processing Script
 ------------------------------------
 This script processes translation data at either the sentence or paragraph level.
 It reads an Excel file containing translation data across multiple sheets (each sheet
-corresponding to a language) and filters out rows where the "Original" text either 
-contains the word "Translation" or is empty. For each language, it extracts the 
-"Generated" and "Corrected" translations and writes them to a CSV file. It also 
+corresponding to a language) and filters out rows where the "Original" text either
+contains the word "Translation" or is empty. For each language, it extracts the
+"Generated" and "Corrected" translations and writes them to a CSV file. It also
 writes a JSON file listing the languages that were processed.
 
 Usage:

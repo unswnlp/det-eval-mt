@@ -4,8 +4,8 @@ LaBSE Similarity Score Calculator
 ---------------------------------
 This script calculates similarity scores between translations using the LaBSE model.
 It reads a CSV file containing translations (with the first column as the reference
-and subsequent columns as translations), computes the cosine similarity between the 
-reference and each translation, and then writes the averaged similarity scores per 
+and subsequent columns as translations), computes the cosine similarity between the
+reference and each translation, and then writes the averaged similarity scores per
 language to a JSON file.
 
 Usage:

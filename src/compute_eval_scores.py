@@ -3,8 +3,8 @@
 Translation Evaluation Metrics Computation Script
 ---------------------------------------------------
 This script computes evaluation metrics for translations at either the sentence-level
-or paragraph-level. It reads CSV files containing generated translations and their 
-corresponding post-edited corrections, computes metrics such as BLEU, ROUGE, CHRF, 
+or paragraph-level. It reads CSV files containing generated translations and their
+corresponding post-edited corrections, computes metrics such as BLEU, ROUGE, CHRF,
 and average edit distance, and then aggregates these metrics into a summary JSON file.
 
 Usage:
@@ -41,7 +41,6 @@ import os
 import pandas as pd
 from tqdm import tqdm
 import evaluate
-import editdistance
 
 
 def compute_scores(csv_dir, languages):
@@ -96,15 +95,6 @@ def compute_scores(csv_dir, languages):
                 predictions=list(data["Generated"]),
                 references=[[i] for i in data["Corrected"]],
             )
-            # Compute average edit distance between generated and corrected translations
-            edits = []
-            for i in range(len(data)):
-                edits.append(
-                    editdistance.eval(
-                        data.iloc[i]["Generated"], data.iloc[i]["Corrected"]
-                    )
-                )
-            avg_edit = sum(edits) / len(edits) if edits else 0
 
             # Compute mean score as an average of normalized CHRF, BLEU, and ROUGE scores
             mean_score = (
@@ -118,11 +108,12 @@ def compute_scores(csv_dir, languages):
             # Build a dictionary entry for the current language
             entry = {
                 "language": lang.replace("_", " ").split()[0].lower(),
-                "bleu": bleu_score,
-                "rouge": rouge_score,
-                "chrf": chrf_score,
-                "edit": avg_edit,
-                "mean": mean_score,
+                "bleu": "%.2f" % bleu_score["bleu"],
+                "rouge1": "%.2f" % rouge_score["rouge1"],
+                "rouge2": "%.2f" % rouge_score["rouge2"],
+                "rougeL": "%.2f" % rouge_score["rougeL"],
+                "chrf": "%.2f" % (chrf_score["score"] / 100),
+                "mean": "%.2f" % mean_score,
             }
             entries.append(entry)
         except Exception as e:
